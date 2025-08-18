@@ -14,8 +14,13 @@ class LoadingCategory extends CategoryState {}
 class CategoryLoaded extends CategoryState {
   final List<Category> categories;
   final List<Product> products;
+  final String selectedCategoryId;
 
-  const CategoryLoaded({required this.categories, required this.products});
+  const CategoryLoaded({
+    required this.categories,
+    required this.products,
+    required this.selectedCategoryId,
+  });
 }
 
 class ErrorLoadingCategory extends CategoryState {

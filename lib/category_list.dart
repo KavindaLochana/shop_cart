@@ -1,46 +1,66 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop_cart/category.dart';
 import 'package:shop_cart/category/bloc/category_bloc.dart';
+import 'package:shop_cart/products/bloc/product_bloc.dart';
 
 class CategoryList extends StatelessWidget {
   const CategoryList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CategoryBloc, CategoryState>(
-      builder: (context, state) {
-        if (state is CategoryLoaded) {
-          return Container(
-            height: 60,
-            margin: const EdgeInsets.symmetric(vertical: 8),
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: state.categories.length + 1, // +1 for "All" category
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  return _buildCategoryChip(
-                    context,
-                    'All',
-                    null,
-                    // state.selectedCategoryId == null,
-                    false,
-                  );
-                }
+    List<Category> categories = [];
+    String selectedId = '0';
 
-                final category = state.categories[index - 1];
-                return _buildCategoryChip(
-                  context,
-                  category.name,
-                  category.id,
-                  // state.selectedCategoryId == category.id,
-                  false,
-                );
-              },
-            ),
-          );
+    return BlocConsumer<ProductBloc, ProductState>(
+      listener: (context, state) {
+        debugPrint('CAME TO PRODUCT LISTNER....');
+        if (state is ProductFilteredByCategory) {
+          selectedId = state.selectedCategoryId;
+          debugPrint('BLOC CAT ID: $selectedId');
         }
-        return const SizedBox.shrink();
+      },
+      builder: (context, state) {
+        return BlocConsumer<CategoryBloc, CategoryState>(
+          listener: (context, state) {
+            if (state is CategoryLoaded) {
+              categories = state.categories;
+              selectedId = '0';
+            }
+          },
+          builder: (context, state) {
+            if (state is CategoryLoaded) {
+              return Container(
+                height: 60,
+                margin: const EdgeInsets.symmetric(vertical: 8),
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  itemCount: categories.length + 1, // +1 for "All" category
+                  itemBuilder: (context, index) {
+                    if (index == 0) {
+                      return _buildCategoryChip(
+                        context,
+                        'All',
+                        '0',
+                        selectedId == '0',
+                      );
+                    }
+
+                    final category = categories[index - 1];
+                    return _buildCategoryChip(
+                      context,
+                      category.name,
+                      category.id,
+                      selectedId == category.id,
+                    );
+                  },
+                ),
+              );
+            }
+            return const SizedBox.shrink();
+          },
+        );
       },
     );
   }
@@ -57,11 +77,13 @@ class CategoryList extends StatelessWidget {
         label: Text(label),
         selected: isSelected,
         onSelected: (selected) {
-          // context.read<ProductBloc>().filterByCategory(
-          //   selected ? categoryId : null,
-          // );
+          debugPrint('ONSELECTED TAPEED:::: $categoryId');
+
+          context.read<ProductBloc>().add(
+            FilterByCategory(categoryId: categoryId),
+          );
         },
-        selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
+        selectedColor: Theme.of(context).primaryColor.withValues(alpha: 0.2),
         checkmarkColor: Theme.of(context).primaryColor,
         side: BorderSide(
           color:

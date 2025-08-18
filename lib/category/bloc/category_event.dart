@@ -7,4 +7,8 @@ sealed class CategoryEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadCategory extends CategoryEvent {}
+class LoadCategory extends CategoryEvent {
+  final String category;
+
+  const LoadCategory({required this.category});
+}

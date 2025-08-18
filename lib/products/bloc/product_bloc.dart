@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/widgets.dart';
 import 'package:shop_cart/category.dart';
 import 'package:shop_cart/product_repository.dart';
 import 'package:shop_cart/products.dart';
@@ -40,36 +41,32 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     FilterByCategory event,
     Emitter<ProductState> emit,
   ) async {
-    final currentState = state;
-    if (currentState is ProductLoaded) {
-      List<Product> filteredProducts;
+    emit(ProductLoading());
 
-      if (event.categoryId == null) {
-        filteredProducts = currentState.products;
+    try {
+      List<Product> filteredProducts = [];
+      final products = await _repository.getProducts();
+
+      if (event.categoryId == null || event.categoryId == '0') {
+        filteredProducts = products;
       } else {
         filteredProducts =
-            currentState.products
+            products
                 .where((product) => product.categoryId == event.categoryId)
                 .toList();
       }
 
+      debugPrint('CATEGORY ID::::::: ${event.categoryId}');
+
       emit(
         ProductFilteredByCategory(
           filteredProducts: filteredProducts,
-          selectedCategoryId: event.categoryId,
+          selectedCategoryId: event.categoryId ?? '0',
           searchQuery: '',
-          clearCategory: event.categoryId == null,
         ),
       );
-
-      // emit(
-      //   currentState.copyWith(
-      //     filteredProducts: filteredProducts,
-      //     selectedCategoryId: categoryId,
-      //     searchQuery: '',
-      //     clearCategory: categoryId == null,
-      //   ),
-      // );
+    } catch (e) {
+      emit(ProductError('Failed to load products: ${e.toString()}'));
     }
   }
 

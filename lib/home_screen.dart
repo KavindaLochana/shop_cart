@@ -18,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    context.read<CategoryBloc>().add(LoadCategory());
+    context.read<CategoryBloc>().add(LoadCategory(category: '0'));
     context.read<ProductBloc>().add(LoadProducts());
     super.initState();
   }

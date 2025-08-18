@@ -34,26 +34,6 @@ class ProductLoaded extends ProductState {
     selectedCategoryId ?? '',
     searchQuery,
   ];
-
-  // ProductLoaded copyWith({
-  //   List<Category>? categories,
-  //   List<Product>? products,
-  //   List<Product>? filteredProducts,
-  //   String? selectedCategoryId,
-  //   String? searchQuery,
-  //   bool clearCategory = false,
-  // }) {
-  //   return ProductLoaded(
-  //     categories: categories ?? this.categories,
-  //     products: products ?? this.products,
-  //     filteredProducts: filteredProducts ?? this.filteredProducts,
-  //     selectedCategoryId:
-  //         clearCategory
-  //             ? null
-  //             : (selectedCategoryId ?? this.selectedCategoryId),
-  //     searchQuery: searchQuery ?? this.searchQuery,
-  //   );
-  // }
 }
 
 class ProductError extends ProductState {
@@ -67,14 +47,12 @@ class ProductError extends ProductState {
 
 class ProductFilteredByCategory extends ProductState {
   final List<Product>? filteredProducts;
-  final String? selectedCategoryId;
+  final String selectedCategoryId;
   final String? searchQuery;
-  final bool clearCategory;
 
   const ProductFilteredByCategory({
     required this.filteredProducts,
     required this.selectedCategoryId,
     required this.searchQuery,
-    this.clearCategory = false,
   });
 }

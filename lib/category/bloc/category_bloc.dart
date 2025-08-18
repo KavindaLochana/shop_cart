@@ -23,7 +23,13 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       final categories = await _repository.getCategories();
       final products = await _repository.getProducts();
 
-      emit(CategoryLoaded(categories: categories, products: products));
+      emit(
+        CategoryLoaded(
+          categories: categories,
+          products: products,
+          selectedCategoryId: event.category,
+        ),
+      );
     } catch (e) {
       emit(
         ErrorLoadingCategory(
