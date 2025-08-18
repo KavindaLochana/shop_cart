@@ -43,7 +43,7 @@ class ProductGrid extends StatelessWidget {
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
-                    // context.read<ProductCubit>().loadProducts();
+                    context.read<ProductBloc>().add(LoadProducts());
                   },
                   child: const Text('Retry'),
                 ),
@@ -69,7 +69,7 @@ class ProductGrid extends StatelessWidget {
                 const SizedBox(height: 8),
                 TextButton(
                   onPressed: () {
-                    // context.read<ProductCubit>().clearFilters();
+                    context.read<ProductBloc>().add(LoadProducts());
                   },
                   child: const Text('Show all products'),
                 ),
