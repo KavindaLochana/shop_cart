@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_cart/cart_cubit.dart';
-import 'package:shop_cart/cart_item_tile.dart';
+import 'package:shop_cart/feature/cart/bloc/cart_bloc.dart';
+import 'package:shop_cart/feature/cart/cart_item_tile.dart';
 
-class CartScreen extends StatelessWidget {
-  const CartScreen({super.key});
+class CartScreen extends StatefulWidget {
+  final ScrollController? scrollController;
+
+  const CartScreen({super.key, this.scrollController});
+
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  @override
+  void initState() {
+    context.read<CartBloc>().add(LoadCart());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +37,7 @@ class CartScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(2),
             ),
           ),
+
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Row(
@@ -33,7 +47,7 @@ class CartScreen extends StatelessWidget {
                   'Shopping Cart',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
-                BlocBuilder<CartCubit, CartState>(
+                BlocBuilder<CartBloc, CartState>(
                   builder: (context, state) {
                     if (state is CartLoaded && state.items.isNotEmpty) {
                       return TextButton(
@@ -47,8 +61,9 @@ class CartScreen extends StatelessWidget {
               ],
             ),
           ),
+
           Expanded(
-            child: BlocBuilder<CartCubit, CartState>(
+            child: BlocBuilder<CartBloc, CartState>(
               builder: (context, state) {
                 if (state is CartLoading) {
                   return const Center(child: CircularProgressIndicator());
@@ -84,6 +99,7 @@ class CartScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: ListView.separated(
+                          controller: widget.scrollController,
                           padding: const EdgeInsets.all(16),
                           itemCount: state.items.length,
                           separatorBuilder: (context, index) => const Divider(),
@@ -116,7 +132,7 @@ class CartScreen extends StatelessWidget {
                         const SizedBox(height: 16),
                         ElevatedButton(
                           onPressed: () {
-                            context.read<CartCubit>().loadCart();
+                            context.read<CartBloc>().add(LoadCart());
                           },
                           child: const Text('Retry'),
                         ),
@@ -214,7 +230,7 @@ class CartScreen extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                context.read<CartCubit>().clearCart();
+                context.read<CartBloc>().add(ClearCart());
                 Navigator.of(context).pop();
               },
               style: TextButton.styleFrom(foregroundColor: Colors.red),

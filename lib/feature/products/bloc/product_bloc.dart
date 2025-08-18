@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
-import 'package:shop_cart/category.dart';
-import 'package:shop_cart/product_repository.dart';
-import 'package:shop_cart/products.dart';
+import 'package:shop_cart/feature/category/category.dart';
+import 'package:shop_cart/feature/products/product_repository.dart';
+import 'package:shop_cart/feature/products/products.dart';
 
 part 'product_event.dart';
 part 'product_state.dart';

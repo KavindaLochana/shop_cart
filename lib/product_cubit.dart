@@ -1,9 +1,9 @@
 // States
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_cart/category.dart';
-import 'package:shop_cart/product_repository.dart';
-import 'package:shop_cart/products.dart';
+import 'package:shop_cart/feature/category/category.dart';
+import 'package:shop_cart/feature/products/product_repository.dart';
+import 'package:shop_cart/feature/products/products.dart';
 
 abstract class ProductState extends Equatable {
   const ProductState();

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_cart/cart_cubit.dart';
-import 'package:shop_cart/cart_item.dart';
-import 'package:shop_cart/quantity_selector.dart';
+import 'package:shop_cart/feature/cart/cart_item.dart';
+import 'package:shop_cart/feature/shared/quantity_selector.dart';
+
+import 'bloc/cart_bloc.dart';
 
 class CartItemTile extends StatelessWidget {
   final CartItem cartItem;
@@ -63,11 +64,11 @@ class CartItemTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '\${cartItem.product.price.toStringAsFixed(2)}',
+                      '\$${cartItem.product.price.toStringAsFixed(2)}',
                       style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                     ),
                     Text(
-                      '\${cartItem.totalPrice.toStringAsFixed(2)}',
+                      '\$${cartItem.totalPrice.toStringAsFixed(2)}',
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -81,18 +82,22 @@ class CartItemTile extends StatelessWidget {
           ),
           const SizedBox(width: 12),
 
-          // Quantity Controls and Remove Button
+          // qty and remove item buttons
           Column(
             children: [
               QuantitySelector(
                 quantity: cartItem.quantity,
                 onQuantityChanged: (quantity) {
                   if (quantity == 0) {
-                    context.read<CartCubit>().removeItem(cartItem.product.id);
+                    context.read<CartBloc>().add(
+                      RemoveItemFromCart(cartItem.product.id),
+                    );
                   } else {
-                    context.read<CartCubit>().updateItemQuantity(
-                      cartItem.product.id,
-                      quantity,
+                    context.read<CartBloc>().add(
+                      UpdateItemQuantity(
+                        productId: cartItem.product.id,
+                        quantity: quantity,
+                      ),
                     );
                   }
                 },
@@ -133,7 +138,10 @@ class CartItemTile extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                context.read<CartCubit>().removeItem(cartItem.product.id);
+                // context.read<CartCubit>().removeItem(cartItem.product.id);
+                context.read<CartBloc>().add(
+                  RemoveItemFromCart(cartItem.product.id),
+                );
                 Navigator.of(context).pop();
               },
               style: TextButton.styleFrom(foregroundColor: Colors.red),

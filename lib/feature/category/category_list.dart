@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_cart/category.dart';
-import 'package:shop_cart/category/bloc/category_bloc.dart';
-import 'package:shop_cart/products/bloc/product_bloc.dart';
+import 'package:shop_cart/feature/category/category.dart';
+import 'package:shop_cart/feature/category/bloc/category_bloc.dart';
+import 'package:shop_cart/feature/products/bloc/product_bloc.dart';
 
 class CategoryList extends StatelessWidget {
   const CategoryList({super.key});

@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shop_cart/cart_item.dart';
-import 'package:shop_cart/product_repository.dart';
+import 'package:shop_cart/feature/cart/cart_item.dart';
+import 'package:shop_cart/feature/products/product_repository.dart';
 
 class CartRepository {
   static const String _cartKey = 'cart_items';

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_cart/cart_cubit.dart';
-import 'package:shop_cart/cart_screen.dart';
-import 'package:shop_cart/category/bloc/category_bloc.dart';
-import 'package:shop_cart/category_list.dart';
-import 'package:shop_cart/product_grid.dart';
-import 'package:shop_cart/products/bloc/product_bloc.dart';
-import 'package:shop_cart/search_bar.dart';
+import 'package:shop_cart/feature/cart/bloc/cart_bloc.dart';
+import 'package:shop_cart/feature/cart/cart_screen.dart';
+import 'package:shop_cart/feature/category/bloc/category_bloc.dart';
+import 'package:shop_cart/feature/category/category_list.dart';
+import 'package:shop_cart/feature/products/product_grid.dart';
+import 'package:shop_cart/feature/products/bloc/product_bloc.dart';
+import 'package:shop_cart/feature/search/search_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Theme.of(context).primaryColor,
         foregroundColor: Colors.white,
         actions: [
-          BlocBuilder<CartCubit, CartState>(
+          BlocBuilder<CartBloc, CartState>(
             builder: (context, state) {
               int itemCount = 0;
               if (state is CartLoaded) {
@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: BlocListener<CartCubit, CartState>(
+      body: BlocListener<CartBloc, CartState>(
         listener: (context, state) {
           if (state is CartError) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -100,12 +100,15 @@ class _HomeScreenState extends State<HomeScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
+      backgroundColor: Colors.transparent,
       builder:
           (context) => DraggableScrollableSheet(
             initialChildSize: 0.7,
             maxChildSize: 0.9,
             minChildSize: 0.5,
-            builder: (context, scrollController) => const CartScreen(),
+            builder:
+                (context, scrollController) =>
+                    CartScreen(scrollController: scrollController),
           ),
     );
   }
