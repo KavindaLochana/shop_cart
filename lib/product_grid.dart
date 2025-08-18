@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_cart/product_card.dart';
+import 'package:shop_cart/products.dart';
 import 'package:shop_cart/products/bloc/product_bloc.dart';
 
 class ProductGrid extends StatelessWidget {
@@ -8,52 +9,23 @@ class ProductGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProductBloc, ProductState>(
+    List<Product> filteredProducts = [];
+    String searched = '';
+
+    return BlocConsumer<ProductBloc, ProductState>(
+      listener: (context, state) {
+        if (state is ProductLoaded) {
+          filteredProducts = state.filteredProducts;
+        }
+
+        if (state is ProductFilteredByCategory) {
+          filteredProducts = state.filteredProducts ?? [];
+          searched = state.searchQuery ?? '';
+        }
+      },
       builder: (context, state) {
         if (state is ProductLoading) {
           return const Center(child: CircularProgressIndicator());
-        }
-
-        if (state is ProductLoaded) {
-          if (state.filteredProducts.isEmpty) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.search_off, size: 80, color: Colors.grey[400]),
-                  const SizedBox(height: 16),
-                  Text(
-                    state.searchQuery.isNotEmpty
-                        ? 'No products found for "${state.searchQuery}"'
-                        : 'No products found in this category',
-                    style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 8),
-                  TextButton(
-                    onPressed: () {
-                      // context.read<ProductCubit>().clearFilters();
-                    },
-                    child: const Text('Show all products'),
-                  ),
-                ],
-              ),
-            );
-          }
-
-          return GridView.builder(
-            padding: const EdgeInsets.all(16),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 0.65,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
-            ),
-            itemCount: state.filteredProducts.length,
-            itemBuilder: (context, index) {
-              return ProductCard(product: state.filteredProducts[index]);
-            },
-          );
         }
 
         if (state is ProductError) {
@@ -80,7 +52,45 @@ class ProductGrid extends StatelessWidget {
           );
         }
 
-        return const SizedBox.shrink();
+        if (filteredProducts.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.search_off, size: 80, color: Colors.grey[400]),
+                const SizedBox(height: 16),
+                Text(
+                  searched.isNotEmpty
+                      ? 'No products found for "$searched"'
+                      : 'No products found in this category',
+                  style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 8),
+                TextButton(
+                  onPressed: () {
+                    // context.read<ProductCubit>().clearFilters();
+                  },
+                  child: const Text('Show all products'),
+                ),
+              ],
+            ),
+          );
+        }
+
+        return GridView.builder(
+          padding: const EdgeInsets.all(16),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 0.65,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+          ),
+          itemCount: filteredProducts.length,
+          itemBuilder: (context, index) {
+            return ProductCard(product: filteredProducts[index]);
+          },
+        );
       },
     );
   }
