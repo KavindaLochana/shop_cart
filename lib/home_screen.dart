@@ -5,6 +5,7 @@ import 'package:shop_cart/cart_screen.dart';
 import 'package:shop_cart/category/bloc/category_bloc.dart';
 import 'package:shop_cart/category_list.dart';
 import 'package:shop_cart/product_grid.dart';
+import 'package:shop_cart/products/bloc/product_bloc.dart';
 import 'package:shop_cart/search_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     context.read<CategoryBloc>().add(LoadCategory());
+    context.read<ProductBloc>().add(LoadProducts());
     super.initState();
   }
 

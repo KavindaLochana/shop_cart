@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_cart/product_card.dart';
-import 'package:shop_cart/product_cubit.dart';
+import 'package:shop_cart/products/bloc/product_bloc.dart';
 
 class ProductGrid extends StatelessWidget {
   const ProductGrid({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProductCubit, ProductState>(
+    return BlocBuilder<ProductBloc, ProductState>(
       builder: (context, state) {
         if (state is ProductLoading) {
           return const Center(child: CircularProgressIndicator());
@@ -32,7 +32,7 @@ class ProductGrid extends StatelessWidget {
                   const SizedBox(height: 8),
                   TextButton(
                     onPressed: () {
-                      context.read<ProductCubit>().clearFilters();
+                      // context.read<ProductCubit>().clearFilters();
                     },
                     child: const Text('Show all products'),
                   ),
@@ -71,7 +71,7 @@ class ProductGrid extends StatelessWidget {
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
-                    context.read<ProductCubit>().loadProducts();
+                    // context.read<ProductCubit>().loadProducts();
                   },
                   child: const Text('Retry'),
                 ),
