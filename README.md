@@ -18,7 +18,7 @@ Used tools and SDKs:
 
 SETUP INSTRUCTIONS:
 
-    Clone the repository
+    Clone the repository (USE Main branch)
         git clone https://github.com/KavindaLochana/shop_cart.git
         cd shop_cart
     
