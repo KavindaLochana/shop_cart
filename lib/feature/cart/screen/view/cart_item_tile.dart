@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_cart/feature/cart/cart_item.dart';
+import 'package:shop_cart/feature/cart/data/cart_item.dart';
 import 'package:shop_cart/feature/shared/quantity_selector.dart';
 
-import 'bloc/cart_bloc.dart';
+import '../../bloc/cart_bloc.dart';
 
 class CartItemTile extends StatelessWidget {
   final CartItem cartItem;

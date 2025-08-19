@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_cart/feature/products/product_card.dart';
-import 'package:shop_cart/feature/products/products.dart';
+import 'package:shop_cart/feature/products/screen/product_card.dart';
+import 'package:shop_cart/feature/products/data/model/products.dart';
 import 'package:shop_cart/feature/products/bloc/product_bloc.dart';
 
-import '../search/bloc/search_bloc.dart';
+import '../../../search/bloc/search_bloc.dart';
 
 class ProductGrid extends StatelessWidget {
   const ProductGrid({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_cart/feature/cart/bloc/cart_bloc.dart';
-import 'package:shop_cart/feature/products/products.dart';
+import 'package:shop_cart/feature/products/data/model/products.dart';
 import 'package:shop_cart/feature/shared/quantity_selector.dart';
 
 class ProductCard extends StatefulWidget {
@@ -104,7 +104,6 @@ class _ProductCardState extends State<ProductCard> {
                   BlocBuilder<CartBloc, CartState>(
                     builder: (context, state) {
                       if (state is CartLoaded) {
-                        debugPrint('CART LOADED>>>>>>>>>>>>>>>>');
                         final cartItem =
                             state.items
                                 .where(
@@ -169,7 +168,7 @@ class _ProductCardState extends State<ProductCard> {
                           );
                         }
                       }
-                      debugPrint('OUT OF THE IF>>>>>>>>>>>>>>>>>>');
+
                       return const SizedBox(height: 32);
                     },
                   ),

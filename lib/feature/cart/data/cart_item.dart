@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:shop_cart/feature/products/products.dart';
+import 'package:shop_cart/feature/products/data/model/products.dart';
 
 class CartItem extends Equatable {
   final Product product;

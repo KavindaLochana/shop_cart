@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_cart/feature/category/category.dart';
+import 'package:shop_cart/feature/category/data/model/category.dart';
 import 'package:shop_cart/feature/category/bloc/category_bloc.dart';
 import 'package:shop_cart/feature/products/bloc/product_bloc.dart';
 
@@ -14,7 +14,6 @@ class CategoryList extends StatelessWidget {
 
     return BlocConsumer<ProductBloc, ProductState>(
       listener: (context, state) {
-        debugPrint('CAME TO PRODUCT LISTNER....');
         if (state is ProductFilteredByCategory) {
           selectedId = state.selectedCategoryId;
           debugPrint('BLOC CAT ID: $selectedId');
@@ -77,8 +76,6 @@ class CategoryList extends StatelessWidget {
         label: Text(label),
         selected: isSelected,
         onSelected: (selected) {
-          debugPrint('ONSELECTED TAPEED:::: $categoryId');
-
           context.read<ProductBloc>().add(
             FilterByCategory(categoryId: categoryId),
           );

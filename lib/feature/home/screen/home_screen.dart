@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_cart/feature/cart/bloc/cart_bloc.dart';
-import 'package:shop_cart/feature/cart/cart_screen.dart';
+import 'package:shop_cart/feature/cart/screen/cart_screen.dart';
 import 'package:shop_cart/feature/category/bloc/category_bloc.dart';
-import 'package:shop_cart/feature/category/category_list.dart';
-import 'package:shop_cart/feature/products/product_grid.dart';
+import 'package:shop_cart/feature/category/screen/view/category_list.dart';
+import 'package:shop_cart/feature/products/screen/view/product_grid.dart';
 import 'package:shop_cart/feature/products/bloc/product_bloc.dart';
-import 'package:shop_cart/feature/search/search_bar.dart';
+import 'package:shop_cart/feature/search/view/search_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

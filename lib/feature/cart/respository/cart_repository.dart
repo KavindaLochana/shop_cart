@@ -1,12 +1,10 @@
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shop_cart/feature/cart/cart_item.dart';
-import 'package:shop_cart/feature/products/product_repository.dart';
+import 'package:shop_cart/feature/cart/data/cart_item.dart';
 
 class CartRepository {
   static const String _cartKey = 'cart_items';
-  final ProductRepository _productRepository = ProductRepository();
 
   Future<List<CartItem>> getCartItems() async {
     try {
@@ -28,7 +26,7 @@ class CartRepository {
       final cartJson = json.encode(items.map((item) => item.toJson()).toList());
       await prefs.setString(_cartKey, cartJson);
     } catch (e) {
-      // Handle error silently or log it
+      //
     }
   }
 
@@ -37,7 +35,7 @@ class CartRepository {
       final prefs = await SharedPreferences.getInstance();
       await prefs.remove(_cartKey);
     } catch (e) {
-      // Handle error silently or log it
+      //
     }
   }
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_cart/bloc_repo_provider.dart';
-import 'package:shop_cart/feature/cart/cart_repository.dart';
-import 'package:shop_cart/home_screen.dart';
-import 'package:shop_cart/feature/products/product_repository.dart';
+import 'package:shop_cart/feature/cart/respository/cart_repository.dart';
+import 'package:shop_cart/feature/home/screen/home_screen.dart';
+import 'package:shop_cart/feature/products/repository/product_repository.dart';
 
 void main() {
   runApp(const MyApp());

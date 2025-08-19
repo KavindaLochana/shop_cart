@@ -1,5 +1,5 @@
-import 'package:shop_cart/feature/category/category.dart';
-import 'package:shop_cart/feature/products/products.dart';
+import 'package:shop_cart/feature/category/data/model/category.dart';
+import 'package:shop_cart/feature/products/data/model/products.dart';
 
 class ProductRepository {
   static const List<Category> _categories = [

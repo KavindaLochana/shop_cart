@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_cart/feature/cart/bloc/cart_bloc.dart';
-import 'package:shop_cart/feature/cart/cart_item_tile.dart';
+import 'package:shop_cart/feature/cart/screen/view/cart_item_tile.dart';
 
 class CartScreen extends StatefulWidget {
   final ScrollController? scrollController;

@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:shop_cart/feature/cart/cart_item.dart';
-import 'package:shop_cart/feature/cart/cart_repository.dart';
-import 'package:shop_cart/feature/products/products.dart';
+import 'package:shop_cart/feature/cart/data/cart_item.dart';
+import 'package:shop_cart/feature/cart/respository/cart_repository.dart';
+import 'package:shop_cart/feature/products/data/model/products.dart';
 
 part 'cart_event.dart';
 part 'cart_state.dart';
