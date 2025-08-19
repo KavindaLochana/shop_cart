@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_cart/product_cubit.dart';
+import 'package:shop_cart/feature/search/bloc/search_bloc.dart';
 
 class CustomSearchBar extends StatefulWidget {
   const CustomSearchBar({super.key});
@@ -10,11 +10,11 @@ class CustomSearchBar extends StatefulWidget {
 }
 
 class _CustomSearchBarState extends State<CustomSearchBar> {
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void dispose() {
-    _controller.dispose();
+    _searchController.dispose();
     super.dispose();
   }
 
@@ -23,20 +23,19 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
     return Container(
       padding: const EdgeInsets.all(16),
       child: TextField(
-        controller: _controller,
+        controller: _searchController,
         decoration: InputDecoration(
           hintText: 'Search products...',
           prefixIcon: const Icon(Icons.search),
-          suffixIcon: BlocBuilder<ProductCubit, ProductState>(
+          suffixIcon: BlocBuilder<SearchBloc, SearchState>(
             builder: (context, state) {
-              if (state is ProductLoaded &&
-                  (state.searchQuery.isNotEmpty ||
-                      state.selectedCategoryId != null)) {
+              if (state is SearchResultsFetched &&
+                  (state.searchQuery != null || state.searchQuery != '')) {
                 return IconButton(
                   icon: const Icon(Icons.clear),
                   onPressed: () {
-                    _controller.clear();
-                    context.read<ProductCubit>().clearFilters();
+                    _searchController.clear();
+                    context.read<SearchBloc>().add(ClearFilters());
                   },
                 );
               }
@@ -53,7 +52,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
           ),
         ),
         onChanged: (value) {
-          context.read<ProductCubit>().searchProducts(value);
+          context.read<SearchBloc>().add(SearchProducts(value));
         },
       ),
     );
